@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Andrew（石濟安）以個人身分經營 FULSTONE，做流程自動化與 AI Delivery。沿用現有工具，把一個說得清楚的行政流程做成可驗收的結果。看過範圍之前不報價。">
+  <title>FULSTONE｜流程自動化與 AI Delivery</title>
+  <style>
+    :root {
+      --paper: #f3efe6;
+      --ink: #1c1915;
+      --muted: #4a453d;
+      --line: #d9d0c3;
+      --stone: #6b3418;
+      --card: #fffaf3;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 480px at 10% -10%, #efe4d4 0%, transparent 55%),
+        var(--paper);
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+      line-height: 1.65;
+    }
+    :focus-visible { outline: 3px solid var(--stone); outline-offset: 3px; }
+    .skip {
+      position: absolute;
+      left: 12px;
+      top: 0;
+      transform: translateY(-120%);
+      background: #fff;
+      color: var(--ink);
+      padding: 8px 12px;
+      z-index: 2;
+    }
+    .skip:focus { transform: none; }
+    .wrap { width: min(880px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 48px 0 12px; }
+    .mark {
+      font-family: Palatino, "Palatino Linotype", "PMingLiU", serif;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin: 0 0 16px;
+    }
+    h1 {
+      font-family: Palatino, "Palatino Linotype", "PMingLiU", serif;
+      font-weight: 500;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.2;
+      margin: 0 0 12px;
+    }
+    .descriptor { margin: 0 0 12px; color: var(--stone); font-weight: 600; }
+    .lede { font-size: 18px; max-width: 40em; margin: 0; }
+    .actions { display: flex; gap: 12px; margin: 28px 0 8px; flex-wrap: wrap; }
+    a.button, a.textlink {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+    }
+    a.button { background: var(--ink); color: var(--paper); }
+    a.textlink { color: var(--ink); border: 1px solid var(--line); background: transparent; }
+    section { padding: 28px 0; border-top: 1px solid var(--line); }
+    h2 {
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      color: var(--stone);
+      margin: 0 0 12px;
+    }
+    ul { margin: 0; padding-left: 1.1em; }
+    li + li { margin-top: 6px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    article {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 18px;
+    }
+    article h3 { margin: 0 0 8px; font-size: 18px; }
+    article ul { margin: 0; }
+    table { width: 100%; border-collapse: collapse; background: var(--card); }
+    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { width: 34%; color: var(--muted); font-weight: 600; }
+    .note { color: var(--muted); font-size: 15px; }
+    footer { padding: 8px 0 48px; color: var(--muted); font-size: 14px; }
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr; }
+      header { padding-top: 32px; }
+      th { width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">跳到本文</a>
+  <header>
+    <div class="wrap">
+      <p class="mark">FULSTONE</p>
+      <h1>把一個每天重複的行政流程交付好</h1>
+      <p class="descriptor">流程自動化與 AI Delivery</p>
+      <p class="lede">Andrew（石濟安）以個人身分做這件事。沿用團隊已經在用的表單、試算表與信件，把一個說得清楚的流程做成可驗收、可交接的結果。</p>
+      <div class="actions">
+        <a class="button" href="mailto:andrew@fulstone.tw?subject=%E8%81%8A%E8%81%8A%E7%9B%AE%E5%89%8D%E6%B5%81%E7%A8%8B">聊聊目前流程</a>
+        <a class="textlink" href="#price">看價格界線</a>
+        <a class="textlink" href="#next">怎麼開始</a>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <section aria-labelledby="fit-title">
+      <div class="wrap">
+        <h2 id="fit-title">適合誰</h2>
+        <p>10–30 人、已經用 Google 表單、試算表與信件作業的單一營運團隊。每天在這些工具之間複製、核對、整理，主管常等不到可用的總表。決定的人是營運主管或老闆。</p>
+      </div>
+    </section>
+    <section aria-labelledby="scope-title">
+      <div class="wrap">
+        <h2 id="scope-title">交付什麼</h2>
+        <div class="grid">
+          <article>
+            <h3>包含</h3>
+            <ul>
+              <li>一個業務流程，2–4 個既有系統。</li>
+              <li>去掉個資的樣本與規則確認。</li>
+              <li>範圍、驗收、測試版、例外處理。</li>
+              <li>一次約定的驗收，以及操作、停用、重跑說明。</li>
+              <li>原範圍 14 個日曆天的錯誤與未達驗收修正。</li>
+            </ul>
+          </article>
+          <article>
+            <h3>不包含</h3>
+            <ul>
+              <li>更換 ERP、對外群發、代替主管做決定。</li>
+              <li>新的產品平台、全天維運、無限修改。</li>
+              <li>替第三方故障負責。</li>
+              <li>新系統、新報表、新欄位、新規則。這些另案報價。</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section id="price" aria-labelledby="price-title">
+      <div class="wrap">
+        <h2 id="price-title">價格界線</h2>
+        <p>下面是接案規則，不是這一案的報價。證據不足，價格就是未知。不會把參考錨點自動填成報價。</p>
+        <table>
+          <tbody>
+            <tr>
+              <th scope="row">最低接案</th>
+              <td data-amount="8000">TWD 8,000</td>
+            </tr>
+            <tr>
+              <th scope="row">付費探勘</th>
+              <td data-amount="8000">TWD 8,000 起</td>
+            </tr>
+            <tr>
+              <th scope="row">工作流程自動化</th>
+              <td>參考區間 TWD <span data-amount="40000">40,000</span>–<span data-amount="55000">55,000</span></td>
+            </tr>
+            <tr>
+              <th scope="row">參考錨點</th>
+              <td><span data-amount="44000">44,000</span>。不是每案都報這個數字。</td>
+            </tr>
+            <tr>
+              <th scope="row">付款</th>
+              <td>開工前 50%，驗收或已約定的完成里程碑 50%。只收新臺幣境內銀行轉帳。</td>
+            </tr>
+            <tr>
+              <th scope="row">付款資訊</th>
+              <td>付款資訊將於正式簽約／付款通知提供。</td>
+            </tr>
+            <tr>
+              <th scope="row">保固</th>
+              <td>原範圍 14 個日曆天。新需求另案。</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">沒有自動折扣。第三方訂閱由客戶自己持有。個案價格要等範圍證據足夠，再由石濟安確認。</p>
+      </div>
+    </section>
+    <section aria-labelledby="who-title">
+      <div class="wrap">
+        <h2 id="who-title">誰在接案</h2>
+        <p>FULSTONE 是石濟安的個人服務名稱，不是公司，也不是商號。沒有統一編號，不開統一發票，也不宣稱商標已經註冊。</p>
+      </div>
+    </section>
+    <section id="next" aria-labelledby="next-title">
+      <div class="wrap">
+        <h2 id="next-title">怎麼開始</h2>
+        <p>若之後要談，準備三件事：現在的步驟、每月大概的量或工時、希望的結果。可以附一份去掉客戶個資的範例。不要給帳號密碼。</p>
+        <p>想先聊聊目前的流程，寫信到 <a href="mailto:andrew@fulstone.tw">andrew@fulstone.tw</a>（Andrew FULSTONE）。先約 20–30 分鐘聽一段實際流程，不需要提供客戶資料或系統帳密，也沒有拘束力。</p>
+        <p>這份頁面沒有表單，不會送出資料。正式報價與付款通知由石濟安另行發出。現在還不能在這一頁簽約或付款。</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      <p>FULSTONE｜Andrew（石濟安）。流程自動化與 AI Delivery。個人接案，不是公司。<a href="mailto:andrew@fulstone.tw">andrew@fulstone.tw</a></p>
+    </div>
+  </footer>
+</body>
+</html>
