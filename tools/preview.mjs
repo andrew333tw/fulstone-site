@@ -1,0 +1,3 @@
+import {createServer} from 'node:http';import {readFile} from 'node:fs/promises';import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+createServer(async(req,res)=>{try{let name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);if(name.endsWith('/'))name+='index.html';const file=path.resolve(root,'.'+name);if(!file.startsWith(root+path.sep))throw Error();const bytes=await readFile(file);res.setHeader('Content-Type',file.endsWith('.mjs')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.json')?'application/json':'text/html; charset=utf-8');res.end(bytes)}catch{res.statusCode=404;res.end('Not found')}}).listen(8764,'127.0.0.1',()=>console.log('FULSTONE preview http://127.0.0.1:8764'));

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f3efe6">
+<link rel="stylesheet" href="/assets/site.css">
+<meta name="description" content="FULSTONE 虛構資料互動示範：工作室案件進度與交付管理">
+<title>工作室案件進度與交付管理｜FULSTONE Demo</title>
+</head>
+<body>
+<a class="skip" href="#main">跳到操作區</a>
+<header class="wrap demo-top">
+<a class="brand" href="/">FULSTONE</a>
+<a href="/#demos">← 回到服務與示範</a>
+</header>
+<main class="wrap" id="main">
+<div class="demo-intro">
+<p class="eyebrow">Interactive Demo / 虛構資料展示</p>
+<h1>工作室案件進度與交付管理</h1>
+<p class="lede">把案件、交付與回饋放在同一個工作畫面，確認每一步都有人接住。</p>
+<p class="notice">全部為虛構資料，非客戶案例。操作只保留於本頁記憶體，重新整理後會重設。不接受真實檔案上傳，也不會送出或寫入外部資料。</p>
+</div>
+<noscript>這個互動示範需要啟用 JavaScript。你仍可返回官網閱讀服務與合作方式。</noscript>
+<div class="workspace">
+<div class="toolbar">
+<div>
+<label for="filter">篩選案件</label>
+<select id="filter">
+<option value="all">所有案件</option>
+<option value="open">尚未交付</option>
+<option value="done">已交付</option>
+</select>
+</div>
+<button id="reset" class="secondary">重設所有示範進度</button>
+</div>
+<div id="message" role="status" aria-live="polite">
+</div>
+<div class="studio-grid">
+<aside aria-label="案件列表">
+<div id="cases" class="case-list">
+</div>
+</aside>
+<section id="detail" aria-label="案件詳情">
+</section>
+</div>
+<section id="studio-summary" class="panel summary" aria-label="工作室結果摘要">
+</section>
+</div>
+</main>
+<script type="module" src="/assets/studio-ui.mjs">
+</script>
+<footer>
+<div class="wrap">
+<span>FULSTONE · Andrew（石濟安）</span>
+<a href="mailto:andrew@fulstone.tw">andrew@fulstone.tw</a>
+</div>
+</footer>
+</body>
+</html>

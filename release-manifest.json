@@ -1,0 +1,17 @@
+{
+  "release": "FULSTONE-V2-1151018",
+  "files": {
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CNAME": "ca01a6333452bae0069d431363c472a0e9362bb5e63359eb27caa2a2e24331bd",
+    "assets/order-engine.mjs": "81c7f6a7a11704aa1c9c5575dc7489c8089ba6ca1a373309dce7ad52880967b8",
+    "assets/order-provenance.json": "0b9daef7b36f553904447160f428b81ee4191c2cb6ac2ecb5604e0f3341b0149",
+    "assets/order-ui.mjs": "f81fdc446573de1bac4cf162a16e52265326052e3e0a4f337d9c348323e20488",
+    "assets/site.css": "4bf8450af8f17b01b225b49302f7320818007fee118f1b773e884e2fe616d12e",
+    "assets/studio-model.mjs": "3204551ddf384ec89ba08cafc037c7651d3490e93af7787e8a723f3af719a59f",
+    "assets/studio-ui.mjs": "9ed978232cba5d1ef138e7730a45bd98d9fa525e23077b6a869a077619b77061",
+    "assets/ui.mjs": "e12b9ac1771c254dd0a46ce3e6f78dd75bf1057621813054fa51cc7fb7c83dae",
+    "demos/order-check/index.html": "84cbc3ac033ebded32179dd4001ab5966097b6dd3a10bd4c0ed5f9c1df2c476f",
+    "demos/studio-flow/index.html": "2b8158207a47cac871b86f756c3ba30d078aa45a5f7a9d1d5b8667a77db74e5f",
+    "index.html": "7fda0c6bc430feed777094dcf8f6d52165153ff0e609095a39da9e10343b432d"
+  }
+}
