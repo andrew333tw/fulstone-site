@@ -1,0 +1,61 @@
+{
+  "source_repository": "andrew333tw/fulstone-business-os",
+  "inputs": [
+    {
+      "file": "sales-demo/engine.ts",
+      "sha256": "371a19212871d8b402b0a7c70f83dd21fcf5ed305f46c2e68cc5f1e51dd53bdf"
+    },
+    {
+      "file": "adapters/tabular.ts",
+      "sha256": "e32f5bf2cfbbc6a4f97e87949eb923a94551a701ed3f06002ae8fdf4d0f58ebb"
+    },
+    {
+      "file": "delivery-kit/records.ts",
+      "sha256": "8c3529e7f14f0e4ae0f8c10499a27203e7420037003f2cf4de71c0e0b2b41e52"
+    },
+    {
+      "file": "delivery-kit/errors.ts",
+      "sha256": "77924dc2e29c3debfa79edbcdd55845b6fa739e3cb933b7a3b46ede56e861b3b"
+    },
+    {
+      "file": "infra/hash.ts",
+      "sha256": "2a11ac13a9335a08f0d0a355b6cd20408e90750d4fe9b121c0a691d603436192"
+    },
+    {
+      "file": "sales-demo/fixtures/broken-headers/manifest.json",
+      "sha256": "9be061f2cd51934600bc6feaf302cdbed7e06ceb1c5504ba44942f03fbe6be22"
+    },
+    {
+      "file": "sales-demo/fixtures/broken-headers/source-a.csv",
+      "sha256": "428a6ce5577ab1bb5835ecec67484ad7d3fd6f83261b254b899c1d6157aed30e"
+    },
+    {
+      "file": "sales-demo/fixtures/broken-headers/source-b.csv",
+      "sha256": "51ea94c46e57594e8e8bf42bb082c2fb1475d0b21b003d12cdffadb50911f0a2"
+    },
+    {
+      "file": "sales-demo/fixtures/weekly-exceptions/manifest.json",
+      "sha256": "02f03d16af7e57c890982733f2412b9b621d79dc08dcc96603e9ec89960a261e"
+    },
+    {
+      "file": "sales-demo/fixtures/weekly-exceptions/source-a.csv",
+      "sha256": "e0a9410c13abea7832b94915c853dc64c37d5d4e8ac4bc5267970ff36f7c0bfc"
+    },
+    {
+      "file": "sales-demo/fixtures/weekly-exceptions/source-b.csv",
+      "sha256": "8ea35c5b8ee93253702ff486351f22b5a40dd882afd881032086da436ff5b5fe"
+    },
+    {
+      "file": "sales-demo/fixtures/weekly-matched/manifest.json",
+      "sha256": "40c7d6552f602ec225d050c864673a9fc528b1f365a55af4a3afa7c02473f0c6"
+    },
+    {
+      "file": "sales-demo/fixtures/weekly-matched/source-a.csv",
+      "sha256": "9a467f8ce4d3af2a39296904856d55570f9c55962271419964aac47e9c5f839c"
+    },
+    {
+      "file": "sales-demo/fixtures/weekly-matched/source-b.csv",
+      "sha256": "707533ee336150aa96532e51f2338b2838bea7e3460600564d1258fac6b5c2f2"
+    }
+  ]
+}
