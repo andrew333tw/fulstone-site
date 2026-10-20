@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f3efe6">
 <link rel="stylesheet" href="/assets/site.css">
-<meta name="description" content="FULSTONE 虛構資料互動示範：企業訂單核對與異常處理">
-<title>企業訂單核對與異常處理｜FULSTONE Demo</title>
+<meta name="description" content="FULSTONE 虛構資料互動示範：訂單核對 Dashboard 與異常處理">
+<title>訂單核對 Dashboard 與異常處理｜FULSTONE Demo</title>
 </head>
 <body>
 <a class="skip" href="#main">跳到操作區</a>
@@ -18,8 +18,8 @@
 <main class="wrap" id="main">
 <div class="demo-intro">
 <p class="eyebrow">Interactive Demo / 虛構資料展示</p>
-<h1>企業訂單核對與異常處理</h1>
-<p class="lede">從兩份訂單找出差異，讓需要人決定的地方看得清楚。</p>
+<h1>訂單核對 Dashboard 與異常處理</h1>
+<p class="lede">看清差異分布、檢視來源，再逐項確認。用同一份資料，把核對做到完成。</p>
 <p class="notice">全部為虛構資料，非客戶案例。操作只保留於本頁記憶體，重新整理後會重設。不接受真實檔案上傳，也不會送出或寫入外部資料。</p>
 </div>
 <noscript>這個互動示範需要啟用 JavaScript。你仍可返回官網閱讀服務與合作方式。</noscript>
@@ -42,8 +42,11 @@
 </p>
 <div id="message" role="status" aria-live="polite">
 </div>
+<details id="source-preview" class="source-preview" open>
+<summary>查看兩份來源資料（虛構）</summary>
 <div id="sources" class="source-pair">
 </div>
+</details>
 <section id="results" hidden>
 </section>
 </div>

@@ -1,0 +1,12 @@
+{
+  "baseline": "b95112dcf82e2ee1d7a38ced566b641722358ca5",
+  "price": "c46b4da0ba4d86a56b128d37498f77d08d0f41a1598e6354ca31649fd2f8621a",
+  "legal": "38c202315a4e508bc7f07d3413bdfa76d0a5f2c4180fe82d592161f7d4c51a83",
+  "files": {
+    "assets/order-engine.mjs": "81c7f6a7a11704aa1c9c5575dc7489c8089ba6ca1a373309dce7ad52880967b8",
+    "assets/order-provenance.json": "0b9daef7b36f553904447160f428b81ee4191c2cb6ac2ecb5604e0f3341b0149",
+    "assets/studio-model.mjs": "d74e77ab137198a9e23573ea0ba7d14f1054f51b86e3406973c46cd4a91d14e9",
+    "assets/studio-ui.mjs": "5f6559d0369e1aaf6219d1ba942330ca0e676cbedbe49e314fc531a17eec52dd",
+    "demos/studio-flow/index.html": "6340c0c56e65cbf0c8e2eec4315e1a679c20ce23b28ffb617489125aa86f5414"
+  }
+}

@@ -1,17 +1,23 @@
 {
-  "release": "FULSTONE-V2-1151018",
+  "release": "FULSTONE-V3-1151021",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "CNAME": "376f47834522a938d6176cd585a8b8a68950ee19d1d956a2336346bf9b0473a7",
+    "assets/media/share-workflow.jpg": "826f28ec03eb411258d36426cab86bd6a9f09a7cecc47810792d39bff3612856",
+    "assets/media/workflow-demo.mp4": "3f3b2aa29bc8497e55639a197963f9550f5f672ddb86b25640c4e07535b0b65f",
+    "assets/media/workflow-poster.jpg": "c42f83924ec441bc0d96b1ec7fadc707398a26d0737f0cfaaf5d69da45abc188",
+    "assets/media/workflow-zh.vtt": "6c012e63931f7d712c00b689cbc8db2ffcf6b00b11506ba82081ae89b0402de4",
+    "assets/order-dashboard.mjs": "76b1a0482274e20fc84d40a16106e0dae3e8a5f519686620a5e58c08ad87d6f7",
     "assets/order-engine.mjs": "81c7f6a7a11704aa1c9c5575dc7489c8089ba6ca1a373309dce7ad52880967b8",
     "assets/order-provenance.json": "0b9daef7b36f553904447160f428b81ee4191c2cb6ac2ecb5604e0f3341b0149",
-    "assets/order-ui.mjs": "77914368c554f47aefc9171abac0904a5e41d22798a3372a7c6ca4ac9898ff13",
-    "assets/site.css": "bb9e81862e6d539d55d240b53bd5a3ea7c26e5835d53517feb053e478b73933e",
+    "assets/order-ui.mjs": "fa49f74968b48642aa7f6f1efd41eb8522932f20e31872dfd7b5ed4d00437182",
+    "assets/site.css": "7084d58ded482f083ee817488277d852a50760ffbf003900f7f5a0020bb69494",
     "assets/studio-model.mjs": "d74e77ab137198a9e23573ea0ba7d14f1054f51b86e3406973c46cd4a91d14e9",
     "assets/studio-ui.mjs": "5f6559d0369e1aaf6219d1ba942330ca0e676cbedbe49e314fc531a17eec52dd",
     "assets/ui.mjs": "c13a07f20ed794704630bdaf99ca9da37816c13d9726136be29ea615ee58c32c",
-    "demos/order-check/index.html": "4a49422d78fd21e47516bad8e70c4d4fe74c4a0b783139631bc50ae03f55688c",
+    "demos/order-check/index.html": "142deec17d931ba0dc81ac924f674a8a68df130e9a79c055c6cf2b0351aa7089",
     "demos/studio-flow/index.html": "6340c0c56e65cbf0c8e2eec4315e1a679c20ce23b28ffb617489125aa86f5414",
-    "index.html": "94c6367f9058e729f2fee53f67ea255330e0cbb4999a64ebb7d7635ed5895b45"
+    "favicon.ico": "a89b6ee0c801e78c0ecffdc917e4d77d247bf09faa8c77105af907beacb284de",
+    "index.html": "08e121b2709dedb5a6c9395e06d5e8e737a4bd1dc264ca620ebfdc68d58ded73"
   }
 }
