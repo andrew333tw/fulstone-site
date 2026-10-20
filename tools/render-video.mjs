@@ -65,4 +65,3 @@ try {
   console.log('Rendered 40-second original synthetic-demo film:',video,bytes.length,'bytes');
 } catch(error) {console.error(error);process.exitCode=1;} finally {await Promise.race([browser.close(),new Promise(r=>setTimeout(r,5000))]);}
 process.exit(process.exitCode||0);
-
