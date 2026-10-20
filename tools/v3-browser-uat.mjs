@@ -6,7 +6,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_PACKAGE||'playwright');
 const base=process.argv[2]||'http://127.0.0.1:8764',output=process.argv[3];
 if(!output)throw Error('Pass evidence directory outside public repository');
 await mkdir(output,{recursive:true});
-const browser=await chromium.launch({headless:true,channel:'msedge'}),results=[];
+const browser=await chromium.launch({headless:true,channel:process.platform==='win32'?'msedge':undefined}),results=[];
 try {
  for(const width of [1440,390]) {
   const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage();
@@ -18,10 +18,10 @@ try {
   const overflow=async()=>assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'horizontal overflow');
   await page.goto(base+'/',{waitUntil:'networkidle'});await overflow();
   assert.equal(mediaRequests.length,0,'preload none must not download the film before playback');
-  assert.ok((await page.locator('h1').innerText()).includes('兩份資料反覆對'));
+  assert.ok((await page.locator('.premium-hero').innerText()).includes('兩份資料反覆對'));
   const inquiry=await page.locator('a.inquiry').getAttribute('href');
   const mail=new URL(inquiry);assert.equal(mail.pathname,'andrew@fulstone.tw');assert.ok(mail.searchParams.get('body').includes('發生頻率'));assert.ok(mail.searchParams.get('body').includes('不附真實客戶資料'));
-  const image=page.locator('.hero-preview img');assert.ok(await image.evaluate(el=>el.complete&&el.naturalWidth>0));
+  assert.ok(await page.locator('#hero-product').isVisible());
   await page.keyboard.press('Tab');assert.equal(await page.locator(':focus').textContent(),'跳到本文');
   await page.screenshot({path:output+`/v3-home-${width}.png`,fullPage:true});
   const video=page.locator('#workflow-video');
