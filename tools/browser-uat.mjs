@@ -1,7 +1,7 @@
 import {createRequire} from 'node:module';import {mkdir,writeFile} from 'node:fs/promises';import assert from 'node:assert/strict';
 const require=createRequire(import.meta.url);const {chromium}=require(process.env.PLAYWRIGHT_PACKAGE||'playwright');
 const base=process.argv[2]||'http://127.0.0.1:8764';const output=process.argv[3]||'evidence';await mkdir(output,{recursive:true});
-const browser=await chromium.launch({headless:true,channel:'msedge'});const evidence=[];
+const browser=await chromium.launch({headless:true,channel:process.platform==='win32'?'msedge':undefined});const evidence=[];
 for(const width of [1440,390]){
  const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});const page=await context.newPage();page.setDefaultTimeout(10000);const errors=[],writes=[],foreign=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!['GET','HEAD'].includes(r.method()))writes.push(r.url());if(new URL(r.url()).origin!==new URL(base).origin)foreign.push(r.url())});

@@ -34,3 +34,8 @@
 @media(max-width:800px){.hero-preview{padding:16px;box-shadow:5px 6px 0 var(--soft)}.hero h1{font-size:36px}.work-metrics{grid-template-columns:1fr 1fr}.work-metrics>div{padding:14px 12px}.work-metrics>div:first-child{padding-left:12px}.work-metrics>div:nth-child(2){border-right:0}.work-metrics>div:nth-child(-n+2){border-bottom:1px solid var(--line)}.work-metrics dd{font-size:38px}.dashboard-heading{display:block}.dashboard-heading h2{font-size:25px}.chart li{grid-template-columns:1fr auto;gap:6px 12px}.bar-track{grid-column:1 / -1;grid-row:auto;height:10px}.bar-count{grid-column:2;grid-row:auto;font-size:12px}.chart li>span:first-child{grid-row:1}.chart li>.bar-count{grid-row:1}.review-filters{display:grid;grid-template-columns:1fr;gap:12px}.review-filters select{width:100%}.review-filters p{margin:0}.film figcaption{padding:12px 16px}.dashboard{padding:22px 0}nav{gap:8px 20px}.contact .inquiry{width:100%}}
 
 .source-preview{margin-bottom:24px}.source-preview>summary{font-size:14px;font-weight:700;margin-bottom:14px}.source-preview .source-pair{margin-top:12px}
+
+/* V4 embedded working portfolio; full demos retain their own navigation. */
+.embedded .demo-top,.embedded .demo-intro,.embedded footer{display:none}.embedded .wrap{width:calc(100% - 32px)}.embedded .workspace{padding:16px 0}.embedded .steps{margin-bottom:10px}.embedded .toolbar{padding:12px 0;margin-bottom:12px}.embedded .panel{padding:18px}.embedded .dashboard{margin-top:10px}.embedded #message{font-size:13px}
+
+.embedded .order-inquiry{display:none}

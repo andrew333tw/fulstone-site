@@ -1,6 +1,8 @@
 import {DemoStore,listFixtures,previewFixture} from './order-engine.mjs';
 import {esc,table,announce} from './ui.mjs';
 import {dashboard} from './order-dashboard.mjs';
+import {inquiry} from './inquiry.mjs';
+if(new URLSearchParams(location.search).has('embed'))document.body.classList.add('embedded');
 let filters={status:'all',kind:'all'};
 let store=new DemoStore(),run=null;
 const q=s=>document.querySelector(s);
@@ -25,7 +27,9 @@ el.innerHTML=`${stats(run.summary)}<div class="panel"><h2>需要你確認的差�
 }
 q('#scenario').addEventListener('change',()=>{preview();announce('已切換情境，上一組確認已重設。')});
 q('#reset').addEventListener('click',()=>{preview();announce('已重設這組示範，可以重新開始。')});
-q('#run').addEventListener('click',()=>{try{filters={status:'all',kind:'all'};store=new DemoStore();run=store.execute(q('#scenario').value);render();if(run.status!=='FAILED'){announce(`核對完成，有 ${run.summary.pending} 項等待人工確認。`);const h=q('#results h2');h.tabIndex=-1;h.focus()}}catch(e){announce(e.message,true)}});
+q('#run').addEventListener('click',()=>{try{filters={status:'all',kind:'all'};store=new DemoStore();run=store.execute(q('#scenario').value);render();if(run.status!=='FAILED'){announce(`核對完成，有 ${run.summary.pending} 項等待人工確認。`);const h=q('#results h2');h.tabIndex=-1;if(!document.body.classList.contains('embedded'))h.focus()}}catch(e){announce(e.message,true)}});
 q('#results').addEventListener('click',e=>{try{const btn=e.target.closest('button');if(!btn)return;if(btn.dataset.confirm){const id=btn.dataset.confirm;const choice=[...q('#results').querySelectorAll('[data-choice]')].find(c=>c.dataset.choice===id);run=store.decide(run.run_id,id,choice.value);render();announce(`確認已記錄；還有 ${run.summary.pending} 項待確認。`);const pending=[...q('#results').querySelectorAll('[data-confirm]')].find(b=>!b.closest('[data-exception]').hidden&&run.exceptions.find(x=>x.id===b.dataset.confirm&&!x.decision));(pending||(run.summary.pending?q('#status-filter'):q('#complete'))).focus()}else if(btn.id==='complete'){run=store.complete(run.run_id);render();announce('所有例外已確認，結果摘要已產生。');q('#result-title').focus()}}catch(e){announce(e.message,true)}});
 q('#results').addEventListener('change',e=>{if(e.target.id==='status-filter'||e.target.id==='kind-filter'){filters[e.target.id==='status-filter'?'status':'kind']=e.target.value;applyFilters();announce(q('#filter-count').textContent+'。全部待確認數與完成條件不變。')}});
 preview();
+if(document.body.classList.contains('embedded'))q('#run').click();
+document.querySelector('#order-inquiry').href=inquiry('訂單與資料核對');

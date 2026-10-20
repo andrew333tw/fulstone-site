@@ -1,67 +1,28 @@
-// Reproducible silent film: capture the actual synthetic UI, compose six scenes,
-// then encode locally. No network account, customer input or external service.
-import {createRequire} from 'node:module';
-import {mkdir, writeFile, readFile} from 'node:fs/promises';
-import {execFileSync} from 'node:child_process';
-import {createHash} from 'node:crypto';
-import path from 'node:path';
-const require = createRequire(import.meta.url);
-const {chromium} = require(process.env.PLAYWRIGHT_PACKAGE || 'playwright');
-const base = process.argv[2] || 'http://127.0.0.1:8764';
-const output = path.resolve(process.argv[3] || '../video-evidence');
-const media = path.resolve(import.meta.dirname, '../assets/media');
-await mkdir(output, {recursive:true}); await mkdir(media, {recursive:true});
-const ffmpeg = process.env.FFMPEG_PATH || execFileSync('python', ['-X', 'utf8', '-c', 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())'], {encoding:'utf8'}).trim();
-const browser = await chromium.launch({headless:true, channel:'msedge'});
-try {
-  const context = await browser.newContext({viewport:{width:1280,height:720}, reducedMotion:'reduce'});
-  const page = await context.newPage(), stage = await context.newPage();
-  const errors=[]; page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(base+'/demos/order-check/'); await page.waitForSelector('#scenario option',{state:'attached'});
-  const scenes = [];
-  const capture = async (index, heading, caption, selector, duration) => {
-    await page.locator(selector).first().evaluate(el=>window.scrollTo(0,el.getBoundingClientRect().top+scrollY-20));
-    const screen = index===4 ? await page.locator(selector).first().screenshot() : await page.screenshot();
-    await writeFile(path.join(output,`source-${index}.png`),screen);
-    await stage.setContent(`<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;background:#f3efe6;color:#1c1915;font-family:'Microsoft JhengHei',sans-serif}.scene{width:1280px;height:720px;padding:24px 60px 18px}.top{display:flex;justify-content:space-between;font-size:14px;letter-spacing:2px;color:#6b3418}.heading{font-size:32px;font-weight:700;margin:14px 0 18px}.screen{height:490px;border:1px solid #bdb3a3;box-shadow:9px 9px 0 #e1d9cb;overflow:hidden;background:#fffdf8}.screen img{display:block;width:100%}.caption{font-size:19px;margin:20px 0 6px}.bottom{display:flex;justify-content:space-between;font-size:13px;color:#625b51}</style><main class="scene"><div class="top"><b>FULSTONE / MAKE WORK FLOW.</b><span>0${index} / 06</span></div><div class="heading">${heading}</div><div class="screen"><img alt="實際虛構資料示範畫面" src="data:image/png;base64,${screen.toString('base64')}"></div><p class="caption">${caption}</p><div class="bottom"><span>虛構資料展示 · 非客戶案例 · 無真實資料寫入</span><span>fulstone.tw</span></div></main></html>`);
-    await stage.locator('img').evaluate(el=>el.decode());
-    const file=path.join(output,`scene-${index}.png`); await stage.screenshot({path:file});
-    scenes.push({index,heading,caption,duration,source:`source-${index}.png`,frame:`scene-${index}.png`});
-  };
-  await capture(1,'兩份資料，為什麼總要重新核對？','訂單與出貨清單，差異需要一個清楚的處理方式。','#sources',6);
-  await page.locator('#scenario').selectOption('weekly-exceptions');
-  await capture(2,'先選一組情境，保留原本的工作方式。','預載虛構資料，不上傳真實訂單，也不更換整套系統。','.toolbar',6);
-  await page.locator('#run').click();
-  await capture(3,'差異在哪裡，先看清楚。','Dashboard 的數量、分布與明細，來自同一份核對結果。','.dashboard',8);
-  // A real poster: the same browser-rendered third scene, not a mock interface.
-  await stage.screenshot({path:path.join(media,'workflow-poster.jpg'),type:'jpeg',quality:88});
-  const first = page.locator('[data-exception]').last();
-  await first.locator('[data-choice]').selectOption('KEEP_B');
-  await capture(4,'查看來源，再由人決定。','先比較同一項目的來源，選擇採用哪一份或排除。','.exception:last-of-type',8);
-  await first.locator('[data-confirm]').click();
-  while(await page.getByRole('button',{name:'確認此項',exact:true}).count()) await page.getByRole('button',{name:'確認此項',exact:true}).first().click();
-  await page.locator('#complete').click(); await page.locator('#result-title').waitFor();
-  await capture(5,'全部確認後，才產生結果摘要。','每一項人工決定可追溯；示範不寫入任何真實訂單。','#result-title',8);
-  await page.goto(base+'/#contact');
-  await capture(6,'你最常重做的那一步，是什麼？','到 fulstone.tw，試用 Demo，再用三個問題描述你的工作。','#contact',4);
-  if(errors.length) throw Error(JSON.stringify(errors));
-  const args=['-y','-hide_banner','-loglevel','error'];
-  for(const scene of scenes) args.push('-loop','1','-t',String(scene.duration),'-i',path.join(output,scene.frame));
-  const filters=scenes.map((s,i)=>`[${i}:v]fps=24,scale=1280:720,setsar=1,format=yuv420p,fade=t=in:st=0:d=0.25,fade=t=out:st=${s.duration-0.25}:d=0.25[v${i}]`).join(';')+';'+scenes.map((_,i)=>`[v${i}]`).join('')+'concat=n=6:v=1:a=0[v]';
-  const video=path.join(media,'workflow-demo.mp4');
-  args.push('-filter_complex',filters,'-map','[v]','-an','-c:v','libx264','-preset','medium','-crf','23','-movflags','+faststart','-t','40',video);
-  execFileSync(ffmpeg,args,{stdio:'inherit'});
-  const stamp=n=>`00:${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}.000`;
-  let offset=0;const cues=scenes.map(s=>{const start=offset;offset+=s.duration;return `${s.index}\n${stamp(start)} --> ${stamp(offset)}\n${s.heading}\n${s.caption}\n`;});
-  await writeFile(path.join(media,'workflow-zh.vtt'),'WEBVTT\n\n'+cues.join('\n'));
-  // Reuse the actual poster with a correctly sized original sharing crop.
-  const poster=await readFile(path.join(media,'workflow-poster.jpg'));
-  await stage.setViewportSize({width:1200,height:630});
-  await stage.setContent(`<html><style>body{margin:0;background:#f3efe6}img{width:1200px;height:630px;object-fit:cover}</style><img alt="FULSTONE 虛構核對展示" src="data:image/jpeg;base64,${poster.toString('base64')}"></html>`);
-  await stage.locator('img').evaluate(el=>el.decode());
-  await stage.screenshot({path:path.join(media,'share-workflow.jpg'),type:'jpeg',quality:88});
-  const bytes=await readFile(video);
-  await writeFile(path.join(output,'render-receipt.json'),JSON.stringify({source:base,synthetic:true,durationSeconds:40,width:1280,height:720,fps:24,audio:false,scenes,encoderVersion:execFileSync(ffmpeg,['-version'],{encoding:'utf8'}).split('\n')[0],bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),pageErrors:errors},null,2));
-  console.log('Rendered 40-second original synthetic-demo film:',video,bytes.length,'bytes');
-} catch(error) {console.error(error);process.exitCode=1;} finally {await Promise.race([browser.close(),new Promise(r=>setTimeout(r,5000))]);}
-process.exit(process.exitCode||0);
+// V4: actual continuous browser recording with live interaction, camera transitions
+// and caption choreography. No screenshot slideshow or external rendering service.
+import {createRequire} from 'node:module';import {mkdir,writeFile,readFile} from 'node:fs/promises';import {execFileSync} from 'node:child_process';import path from 'node:path';import {createHash} from 'node:crypto';
+const require=createRequire(import.meta.url),{chromium}=require(process.env.PLAYWRIGHT_PACKAGE||'playwright');
+const base=process.argv[2]||'http://127.0.0.1:8764',output=path.resolve(process.argv[3]||'../video-evidence'),media=path.resolve(import.meta.dirname,'../assets/media');await mkdir(output,{recursive:true});await mkdir(media,{recursive:true});
+const ffmpeg=process.env.FFMPEG_PATH||execFileSync('python',['-X','utf8','-c','import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())'],{encoding:'utf8'}).trim();
+const browser=await chromium.launch({headless:true,channel:process.platform==='win32'?'msedge':undefined});
+try{
+ const context=await browser.newContext({viewport:{width:1280,height:720},recordVideo:{dir:output,size:{width:1280,height:720}}}),page=await context.newPage();page.setDefaultTimeout(10000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/demos/operations/?embed=1');
+ // A same-origin frame displays the real site. Overlay is film art direction only.
+ await page.setContent(`<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;background:#18251f;color:#f5f2eb;font-family:'Microsoft JhengHei',sans-serif}.film-stage{width:1280px;height:720px;padding:22px 42px}.brand-line{display:flex;justify-content:space-between;font-size:12px;letter-spacing:2px;color:#d7c2aa}.headline{font-size:30px;font-weight:700;margin:12px 0 18px}.camera{height:498px;overflow:hidden;border-radius:8px;border:1px solid #718073;box-shadow:0 20px 35px #0003;background:#fffefa;transition:transform .5s,opacity .4s}.camera iframe{width:1194px;height:600px;border:0;transform-origin:top left;transition:transform .8s}.camera.focus{transform:scale(1.012)}.caption{font-size:18px;margin:20px 0 10px}.foot{display:flex;justify-content:space-between;font-size:12px;color:#d1dacb}.scene-index{color:#e5b18b}.wipe{opacity:.1;transform:translateY(12px)}</style><main class="film-stage"><div class="brand-line"><b>FULSTONE / ORIGINAL WORKING SYSTEMS</b><span class="scene-index">01 / 06</span></div><div class="headline">資料散在不同地方，工作一直重來？</div><div class="camera"><iframe title="FULSTONE 原創可操作展示" src="${base}/demos/order-check/?embed=1"></iframe></div><p class="caption">從一段反覆核對的工作，找到需要人判斷的地方。</p><div class="foot"><span>虛構資料 / Simulation · 非客戶案例 · 無外部寫入</span><span>fulstone.tw</span></div></main></html>`);
+ const frame=()=>page.frames().find(f=>f.parentFrame());await page.waitForFunction(()=>document.querySelector('iframe').contentDocument?.querySelector('.dashboard'));
+ const start=Date.now(),events=[];
+ const wait=async time=>{const delay=start+time*1000-Date.now();if(delay>0)await new Promise(r=>setTimeout(r,delay));};
+ const scene=async(index,title,caption,url)=>{if(url){await page.locator('.camera').evaluate(el=>el.classList.add('wipe'));await page.waitForTimeout(300);await page.locator('iframe').evaluate((el,url)=>el.src=url,url);await page.waitForTimeout(350);await page.locator('.camera').evaluate(el=>el.classList.remove('wipe'));}await page.locator('.headline').evaluate((el,s)=>el.textContent=s,title);await page.locator('.caption').evaluate((el,s)=>el.textContent=s,caption);await page.locator('.scene-index').evaluate((el,n)=>el.textContent=`0${n} / 06`,index);events.push({index,timeMs:Date.now()-start,title,caption});};
+ await wait(2);await frame().locator('.dashboard').evaluate(el=>el.scrollIntoView({behavior:'smooth',block:'start'}));
+ await wait(5);await scene(2,'差異、來源、人工決定，放在同一段工作。','切換篩選，查看原始依據，再確認採用哪一份。');await frame().locator('#status-filter').selectOption('pending');await frame().locator('#kind-filter').selectOption('VALUE_CONFLICT');await frame().locator('[data-exception]:visible').evaluate(el=>el.scrollIntoView({behavior:'smooth',block:'start'}));await page.locator('.camera').evaluate(el=>el.classList.add('focus'));await wait(8);await frame().locator('[data-exception]:visible [data-choice]').selectOption('KEEP_B');await frame().locator('[data-exception]:visible [data-confirm]').click();
+ await wait(11);await scene(3,'從營運趨勢，追到真正要處理的工作。','日期、狀態與類型篩選後，KPI、圖表和清單一起重算。',base+'/demos/operations/?embed=1');await frame().waitForSelector('#ops-rows tr');await page.locator('.camera').evaluate(el=>el.classList.remove('focus'));await wait(13);await frame().locator('#period').selectOption('7');await wait(15);await frame().locator('[data-day]').first().click();await wait(16);await page.screenshot({path:path.join(media,'workflow-poster.jpg'),type:'jpeg',quality:90});
+ await wait(18);await scene(4,'讓流程往前，也讓錯誤有恢復的路。','缺少欄位時停止，補齊虛構資料後，從失敗的步驟重試。',base+'/demos/workflow/?embed=1');await frame().waitForSelector('#workflow-stages li');await frame().locator('#workflow-scenario').selectOption('invalid');await frame().locator('#workflow-next').click();await wait(20);await frame().locator('#workflow-next').click();await frame().locator('.workflow-board').evaluate(el=>el.scrollIntoView({behavior:'smooth',block:'start'}));await wait(23);await frame().locator('#repair-workflow').click();await frame().locator('#workflow-next').click();await wait(25);await frame().locator('#workflow-next').click();
+ await wait(27);await scene(5,'系統整理線索，最後的判斷交給人。','只有記錄人工審核決定，才會產生可追溯的模擬結果。');await frame().locator('.workflow-work').evaluate(el=>el.scrollIntoView({behavior:'smooth',block:'start'}));await wait(29);await frame().locator('#review-workflow').click();await wait(31);await frame().locator('#workflow-next').click();await wait(33);await frame().locator('#workflow-next').click();
+ await wait(35);await scene(6,'你公司的工作，也可以變成這樣。','到 fulstone.tw，操作原創展示，再用三個問題說明你的需求。',base+'/#contact');await frame().waitForSelector('#contact');await frame().locator('#contact').evaluate(el=>el.scrollIntoView({behavior:'smooth',block:'start'}));await wait(40);
+ const video=page.video();await context.close();const raw=await video.path();
+ const target=path.join(media,'workflow-demo.mp4');execFileSync(ffmpeg,['-y','-hide_banner','-loglevel','error','-i',raw,'-an','-vf','scale=1280:720,fps=24,fade=t=in:st=0:d=0.25,fade=t=out:st=39.5:d=0.5','-c:v','libx264','-preset','medium','-crf','22','-pix_fmt','yuv420p','-movflags','+faststart','-t','40',target],{stdio:'inherit'});
+ const texts=[['00:00:00.000','00:00:05.000','資料散在不同地方，工作一直重來？'],['00:00:05.000','00:00:11.000','核對差異、查看來源，再由人確認。'],['00:00:11.000','00:00:18.000','營運 Dashboard：KPI、圖表與明細同步篩選。'],['00:00:18.000','00:00:27.000','缺欄失敗，補齊資料後恢復檢查。'],['00:00:27.000','00:00:35.000','人工審核完成後，才產生模擬結果。'],['00:00:35.000','00:00:40.000','FULSTONE：你公司的工作，也可以變成這樣。']];await writeFile(path.join(media,'workflow-zh.vtt'),'WEBVTT\n\n'+texts.map((t,i)=>`${i+1}\n${t[0]} --> ${t[1]}\n${t[2]}\n`).join('\n'));
+ execFileSync(ffmpeg,['-y','-hide_banner','-loglevel','error','-i',path.join(media,'workflow-poster.jpg'),'-vf','scale=1200:630:force_original_aspect_ratio=increase,crop=1200:630','-frames:v','1',path.join(media,'share-workflow.jpg')]);
+ const bytes=await readFile(target);if(errors.length)throw Error(JSON.stringify(errors));await writeFile(path.join(output,'render-receipt.json'),JSON.stringify({kind:'continuous live browser recording with original overlays',source:base,durationSeconds:40,width:1280,height:720,fps:24,audio:false,synthetic:true,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),events,errors},null,2));console.log('V4 LIVE FILM',bytes.length,'bytes');
+}catch(e){console.error(e);process.exitCode=1;}finally{await Promise.race([browser.close(),new Promise(r=>setTimeout(r,3000))]);}process.exit(process.exitCode||0);

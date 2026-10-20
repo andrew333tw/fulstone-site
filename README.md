@@ -1,44 +1,52 @@
-# FULSTONE public site V3
-Static GitHub Pages at https://fulstone.tw/; main branch root publishing. No server, login, upload, database or runtime packages.
+# FULSTONE public website V4
 
-`npm test` checks browser engine, studio state, public policy and immutable runtime manifest. `node tools/preview.mjs` serves local preview on 127.0.0.1:8764.
+Static-first original working portfolio, published by the existing GitHub Pages legacy flow from `main` root to https://fulstone.tw/. No backend, login, database, uploads, analytics, customer data or paid rendering service.
 
-`node tools/build-order.mjs <verified-business-os-root>` regenerates the browser engine from unchanged S20 engine and pure validation/CSV functions. TypeScript is loaded from that private repo development dependency; no private state or customer data is imported. `assets/order-provenance.json` records every source hash. `node tools/check-order-parity.mjs <verified-business-os-root>` compares every fixture/action, outputs and receipt hashes against original S20. Run `node tools/manifest.mjs` after asset changes.
+## Product surfaces
 
-Browser UAT: set PLAYWRIGHT_PACKAGE to an existing Playwright installation, then `node tools/browser-uat.mjs <base-url> <evidence-output-directory>`. Uses installed Edge, 1440/390px, full flows and zero external-write/request assertions. Evidence should remain outside this public repository.
+- `/`: full-size live operations hero; three interactive portfolio modes; original motion film; services, cooperation, preserved prices/legal and contextual mailto.
+- `/demos/order-check/`: original reconciliation engine and fixtures with manual-review gates and source/receipt evidence. Embedded mode starts only the synthetic run and never steals initial parent focus.
+- `/demos/operations/`: 56 explicitly synthetic work items, date/status/type filters, clickable daily trend and distribution, work detail and human confirmation. One projection powers every metric/chart/list. Source-row units are distinct from work-item units. Empty completion is unknown, not zero success.
+- `/demos/workflow/`: rule-based Simulation, no LLM/API. Real input validation, deterministic keyword classification, manual accept/exclude gate, failed-step repair, output and local history. No timers pretend that remote processing is happening.
+- `/demos/studio-flow/`: original working studio demo retained.
+- `/showcase-links/`: S21 Website Link Kit, including downloadable Markdown, only published public-domain URLs. Preparation does not authorize or send outreach.
 
-Release: reviewed exact PR head -> merge main -> Pages build commit -> HTTP byte-hash match of every manifest entry -> Production browser UAT. Existing Pages legacy deployment has no deployment.contract.json; retain platform-native build record and receipt. No DNS/config changes.
-Rollback: previous site commit 7a7b1f6b01943d70786d3604916b4996186ab0e1; publish a reviewed revert of this website merge only, then require Pages build + HTTP readback. Do not reset branches or touch Business OS/S18.
+Typography, palette, motion and responsive decisions are in DESIGN.md. The WORK reference URL returned 404 during read-only comparison; no WORK source, assets, data, wording or proprietary layout was imported. The original personal-service legal identity and commercial terms are pinned by tests. No client logo, revenue, savings or successful-case claims were invented.
 
-## V3 conversion and demonstration
+## Verify locally
 
-The homepage leads with repetitive reconciliation, the deliverable and a direct inquiry. The original three service categories, studio demo, pricing and legal copy remain. Inquiry links only open the user's mail client with three prompts; the site submits nothing.
+`npm test` covers original engine/state/policy/manifest and new projection/workflow safety. `node tools/preview.mjs` serves 127.0.0.1:8764. Set PLAYWRIGHT_PACKAGE to an existing Playwright package path when not installed in this repo; Windows uses installed Edge, Linux uses installed Chromium. Keep all screenshots and receipts outside this public repository.
 
-`assets/order-dashboard.mjs` projects the unchanged engine's actual run. Input rows and exception items are explicitly different units. Category bars, global counters and the review list use the same exceptions. Status/type filters only hide list items; all unfinished decisions still gate completion. Source previews collapse after execution and remain available on demand. Decisions and output receipts still belong to the original engine.
-
-### Original film (40 seconds, silent, 1280×720)
-
-The video is a six-scene composition of actual FULSTONE synthetic-demo screenshots with focus, captions and fade transitions; it is not a real customer case or a continuous live recording. Scene durations: 6 + 6 + 8 + 8 + 8 + 4 seconds. No audio or autoplay. `preload="none"`, a poster, optional WebVTT captions and an HTML transcript provide fallbacks. All screen content comes from this repository.
-
-To regenerate, use an installed Playwright package with Edge and local Python packages Pillow and imageio-ffmpeg (0.6.0 includes FFmpeg 7.1). No rendering service is used. `FFMPEG_PATH` can select an existing compatible executable instead. Rendering output/evidence must stay outside the public repo.
-
-```powershell
-# Set PLAYWRIGHT_PACKAGE to the absolute installed Playwright package path.
-node tools/preview.mjs
-# In another shell, with the same environment:
-node tools/render-video.mjs http://127.0.0.1:8764 <outside-repo-evidence-directory>
-python tools/create-favicon.py
+```
+node tools/check-order-parity.mjs <verified-business-os-source-root>
 node tools/manifest.mjs
 npm test
-node tools/browser-uat.mjs http://127.0.0.1:8764 <outside-repo-original-UAT-directory>
-node tools/v3-browser-uat.mjs http://127.0.0.1:8764 <outside-repo-V3-UAT-directory>
-# Optional developer audit with local axe-core 4.11.0; never bundled into the website:
-# Set AXE_SOURCE to the absolute axe-core/axe.min.js path.
-node tools/a11y-uat.mjs http://127.0.0.1:8764 <outside-repo-a11y-directory>
-# After Pages reports the exact merged SHA as built:
-node tools/verify-production.mjs <exact-merged-commit> <outside-repo-production-directory>
+node tools/browser-uat.mjs http://127.0.0.1:8764 <original-evidence>
+node tools/v3-browser-uat.mjs http://127.0.0.1:8764 <v3-regression-evidence>
+node tools/v4-browser-uat.mjs http://127.0.0.1:8764 <v4-evidence>
+node tools/performance-check.mjs http://127.0.0.1:8764 <performance-evidence>
 ```
 
-V3 UAT covers 1440/390px, actual playback/duration/seek/captions, no video download before play, mailto prompts, dashboard/filter/decision consistency, keyboard, failure/reset/reload and no external requests/writes. Keep the original UAT for both demo regressions. Invariants pin original engine, studio runtime, pricing and legal copy to V2 normalized UTF-8 hashes; tests do not require Git history in CI.
+For the optional developer audit set AXE_SOURCE to local axe-core 4.11.0/axe.min.js and run `node tools/a11y-uat.mjs <base> <evidence>`. It checks 16 surface/viewport combinations at 1440/390; it is never bundled into the site. Tests preserve both original demos, failed/empty recovery, keyboard/focus, no overflow and zero external requests/writes.
 
-V3 rollback baseline: `b95112dcf82e2ee1d7a38ced566b641722358ca5`. If this release fails, revert only its reviewed merge using a new reviewed candidate, then repeat Pages/HTTP/browser verification. The earlier rollback reference above belongs to V2 history.
+`tools/build-order.mjs <verified-business-os-root>` and `tools/check-order-parity.mjs` retain the original S20 parity path and provenance contract. V4 does not regenerate or change the original engine. The full-source Business OS is read only for parity, never deployed with this public site.
+
+## Continuous original motion film
+
+`tools/render-video.mjs <local-base> <external-evidence-directory>` records actual browser interactions in a same-origin live frame, with original camera/caption choreography. This replaces V3 screenshot slides. The film shows reconciliation, linked dashboard filtering, validation failure/repair, manual review, actual simulated output and contact. Local Playwright plus imageio-ffmpeg 0.6.0/FFmpeg 7.1 render a 40-second silent 1280x720 H264 MP4; FFMPEG_PATH may select an existing compatible executable. Poster, six VTT cues, share image and HTML transcript accompany the opt-in `preload=none` video. Re-run manifest and tests after rendering.
+
+## Exact-candidate release and public customer access
+
+Reviewed exact PR head -> pass existing CI -> merge main -> native Pages build commit -> HTTP byte-hash match of **every** manifest entry and published manifest -> Production original/V3/V4 browser UAT and accessibility.
+
+```
+node tools/verify-production.mjs <exact-merged-SHA> <external-evidence>
+node tools/public-access.mjs <external-evidence>
+gh workflow run public-access.yml --ref main -f expected_commit=<exact-merged-SHA>
+```
+
+The manually dispatched `Independent public customer access` workflow uses a fresh GitHub-hosted Ubuntu runner and fresh unauthenticated Chromium contexts for desktop/mobile against the hardcoded public FULSTONE domain. It checks exact deployment/assets, public DNS/TLS/HTTP, all demos, media, contact links and no writes, and uploads screenshots/JSON evidence for 30 days. The job token is read-only GitHub metadata access and is never sent to fulstone.tw. The website does not depend on HOME or on this workflow remaining online.
+
+The unchanged S18 URL `https://fulstone.tw/` remains the canonical public entry; it resolves to the latest site without resending any mail. Public URL access does not establish email delivery or email opens. S18 historical receipts and S21 business approval state stay unchanged.
+
+V4 rollback baseline: `ee89ce1135c4fcb5ebfed95e2e1562f8ccc243f8`. Revert only this release merge through a reviewed candidate, then repeat Pages, manifest, HTTP and browser acceptance. Never reset main or touch Business OS/S18. No DNS or account changes are part of the release.

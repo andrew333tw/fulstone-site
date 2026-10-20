@@ -1,4 +1,23 @@
-# FULSTONE V3 design
+# FULSTONE V4 — an original working portfolio
+
+V4 supersedes the V3 layout/effect restrictions below, preserving only its semantic and business boundaries.
+Primary job: a new business visitor sees the level of a usable system, explores one concrete workflow, and starts a contextual inquiry.
+First understanding: reconciliation, operational visibility and controlled workflow integration. Synthetic demonstrations, never claimed client deployments.
+APDS grammar: Analytical overview for operations; Review/Adjudication for reconciliation and workflow. Top navigation for the site; no pretend application sidebar. Desktop overview + detail, mobile list → focused detail with a clear return.
+Personality: warm precision, restrained confidence, substantial working surfaces. Own presence: mineral paper, deep evergreen ink, fired copper, editorial Chinese display, indexed portfolio and live working instruments.
+Palette: canvas #f5f2eb, ink #18251f, surface #fffefa, copper #87452a, teal #356558. Amber attention and red failure remain semantic; accent never implies success.
+Typography: local system Traditional Chinese sans for controls/body (16px); Georgia/PMingLiU for display (desktop 56–64px, mobile 36–40px), tabular numeric evidence. Monospaced English indexes at 12–13px. Do not load remote fonts.
+Composition: 1280px canvas, compact informative hero and a full-width real interactive product at approximately 500px height. Featured portfolio uses a large live working surface, never a thumbnail grid. Studio remains reachable. Contact/price/legal are preserved.
+Component system: 1px stone dividers, 8px working-surface radius, dark chrome, explicit labels and visible focus. Actual filters, rows and SVG chart controls; tables scroll within named regions. Inquiry CTA states its solution context.
+Motion: meaningful 350ms section entrances, 180ms data changes, pointer focus only within the product surface; no background loops. Short CSS page entrances retain spatial continuity; cross-document View Transitions were removed after actual Edge UAT reported an invalid-state abort. Reduced-motion removes entrances/transforms/transitions; every task remains usable.
+Signature ambition: CRAFTED implementation with an identifiable full-scale live product frame. Scene: pain → live overview → filter/drill-down → review → completion → inquiry. Do not claim Distinctive/Memorable human acceptance from automated evidence.
+Media: locally recorded continuous real browser interaction, camera focus and original timed caption layers; not static screenshot slides. Silent H264, poster, VTT and transcript, no autoplay/preload. Six scenes include actual operations and workflow behavior.
+Effect budget: one live working-surface reveal, one supporting data-transition family, focus/hover micro-effects. No ambient particles, decorative KPIs or fake loading.
+Originality: WORK reference URL returned 404 during read-only inspection; no company source, images, data, words or layout imported. Design derives from FULSTONE workflows and the existing brand.
+Responsive: 1440px hero uses full-width board; 390px compact live preview with honest scroll and direct full-demo entrance. Operational KPI becomes 2x2, charts stack, filters wrap, detail returns focus to its row. Full original demo flows remain available.
+Acceptance: screenshots at 1440/390 of hero/full page/each showcase, one bounded polish pass, live chart/list consistency, keyboard and reduced-motion checks, video and public no-auth browser verification. Conversion effect and customer email opens remain unmeasured.
+
+## Previous V3 semantic baseline (retained for provenance)
 Primary job: in 30 seconds understand which stuck piece of work FULSTONE can improve, try it, and contact Andrew.
 First understanding: local workflow improvements and tools for Taiwan SME operations and 3–15 person professional studios.
 Attention: customer problem, concrete output, demo action. Quiet evidence: synthetic-data notice, pricing boundaries, exact result summary.

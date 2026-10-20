@@ -1,0 +1,44 @@
+name: Independent public customer access
+on:
+  workflow_dispatch:
+    inputs:
+      expected_commit:
+        description: Exact merged and deployed SHA
+        required: true
+permissions:
+  contents: read
+  pages: read
+jobs:
+  public-access:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+      EXPECTED_COMMIT: ${{ inputs.expected_commit }}
+      AXE_SOURCE: ${{ github.workspace }}/node_modules/axe-core/axe.min.js
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.expected_commit }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-save --no-package-lock playwright@1.58.2 axe-core@4.11.0
+      - run: npx playwright install --with-deps chromium
+      - name: Verify exact deployed bytes, public DNS and TLS
+        run: |
+          node tools/verify-production.mjs "$EXPECTED_COMMIT" evidence/assets
+          node tools/public-access.mjs evidence/network
+          node tools/performance-check.mjs https://fulstone.tw evidence/performance
+      - name: Clean unauthenticated desktop and mobile browser acceptance
+        run: |
+          node tools/browser-uat.mjs https://fulstone.tw evidence/original
+          node tools/v3-browser-uat.mjs https://fulstone.tw evidence/v3-regression
+          node tools/v4-browser-uat.mjs https://fulstone.tw evidence/v4
+          node tools/a11y-uat.mjs https://fulstone.tw evidence/a11y
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fulstone-v4-independent-public-access
+          path: evidence/
+          retention-days: 30
